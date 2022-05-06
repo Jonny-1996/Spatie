@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\blade\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -25,4 +26,10 @@ Route::get('/', function (){
 
 Route::group(['middleware' => 'auth'],function (){
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    Route::controller(UserController::class)
+        ->group(function(){
+            Route::get('/user/add', 'index')->name('userPage');
+            Route::post('/users', 'store')->name('store');
+        });
 });
